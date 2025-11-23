@@ -1,0 +1,49 @@
+# Configuration for Location-aware Recommendation System
+
+# Data configuration
+data:
+  interactions_file: "data/interactions.csv"
+  items_file: "data/items.csv"
+  users_file: "data/users.csv"
+  test_size: 0.2
+  val_size: 0.1
+  random_state: 42
+
+# Model configuration
+models:
+  # Location-aware collaborative filtering
+  location_cf:
+    n_factors: 50
+    regularization: 0.01
+    iterations: 50
+    alpha: 1.0
+    
+  # Content-based with location features
+  content_based:
+    tfidf_max_features: 1000
+    location_weight: 0.3
+    content_weight: 0.7
+    
+  # Hybrid model
+  hybrid:
+    cf_weight: 0.6
+    content_weight: 0.4
+    location_decay_factor: 0.1
+
+# Evaluation configuration
+evaluation:
+  metrics: ["precision@5", "recall@5", "map@5", "ndcg@5", "hit_rate@5"]
+  k_values: [5, 10, 20]
+  cross_validation_folds: 5
+
+# Location configuration
+location:
+  max_distance_km: 50.0
+  distance_decay_factor: 0.1
+  coordinate_precision: 6
+
+# Demo configuration
+demo:
+  port: 8501
+  max_recommendations: 10
+  show_explanations: true
